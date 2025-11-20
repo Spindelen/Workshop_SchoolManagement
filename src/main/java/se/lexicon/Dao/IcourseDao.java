@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface IcourseDao {
     Course saveCourse(Course course);
-    Course findById(int id);
+    Course findById(String id);
     List<Course> findByName(String name);
     List<Course> findByDate(LocalDate date);
     List<Course> findAll();

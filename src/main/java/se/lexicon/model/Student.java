@@ -1,24 +1,27 @@
 package se.lexicon.model;
 
 
+import java.util.Objects;
+
 public class Student {
-    private int id;
+    private static int counter = 0;
+    private String id;
     private String name;
     private String email;
     private String address;
 
-    public Student(int id, String name, String email, String address) {
-        this.id = id;
-        this.name = name;
-        this.email = email;
-        this.address = address;
+    public Student(String name, String email, String address) {
+        this.id = "P" + (++counter);
+       setName(name);
+       setEmail(email);
+       setAddress(address);
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -27,6 +30,9 @@ public class Student {
     }
 
     public void setName(String name) {
+        if (name == null || name.isEmpty()){
+            throw new IllegalArgumentException(">NB:< Name must be null or empty.");
+        }
         this.name = name;
     }
 
@@ -35,6 +41,9 @@ public class Student {
     }
 
     public void setEmail(String email) {
+        if(email == null || email.isEmpty()){
+            throw new IllegalArgumentException(">NB:< E-mail must be null or empty.");
+        }
         this.email = email;
     }
 
@@ -43,7 +52,22 @@ public class Student {
     }
 
     public void setAddress(String address) {
+        if (address == null|| address.isEmpty()){
+            throw new IllegalArgumentException(">NB:< Address must be null or empty.");
+        }
         this.address = address;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Student student = (Student) o;
+        return id == student.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(id);
     }
 
     @Override

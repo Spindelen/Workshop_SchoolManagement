@@ -4,43 +4,64 @@ import se.lexicon.Dao.IcourseDao;
 import se.lexicon.model.Course;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 public class CourseDaoListImpl implements IcourseDao {
-    private static List<Course> courses;
+    private static List<Course> courseList = new ArrayList<>();
 
     @Override
     public Course saveCourse(Course course) {
-        return null;
+        if (course == null) {
+            throw new IllegalArgumentException(">NB:< Course cannot be null.");
+        }
+        courseList.add(course);
+        return course;
     }
 
     @Override
-    public Course findById(int id) {
+    public Course findById(String id) {
+        for (Course course : courseList) {
+            if (course.getId().equals(id)) {
+                return course;
+            }
+        }
+
         return null;
     }
 
     @Override
     public List<Course> findByName(String name) {
-        return List.of();
+        List<Course> foundCourse = new ArrayList<>();
+        for (Course course : courseList) {
+            if (course.getCourseName().equalsIgnoreCase(name)) {
+                foundCourse.add(course);
+            }
+        }
+
+        return foundCourse;
     }
 
     @Override
     public List<Course> findByDate(LocalDate date) {
-        return List.of();
+        List<Course> foundCourse = new ArrayList<>();
+        for (Course course : courseList) {
+            if (course.getStartDate().equals(date)) {
+                foundCourse.add(course);
+            }
+        }
+
+        return foundCourse;
     }
 
     @Override
     public List<Course> findAll() {
-        return List.of();
+        return courseList;
     }
 
     @Override
     public boolean removeCourse(Course course) {
-        return false;
-    }
-
-    @Override
-    public String toString() {
-        return "CourseDaoListImpl{}";
+        return courseList.remove(course);
     }
 }
+
